@@ -27,28 +27,52 @@ public abstract class QuickSort {
 
     public abstract void sort(int[] a, int l, int r);
 
-    private void swap(int[] a, int x, int y) {
-        int t = a[x];
-        a[x] = a[y];
-        a[y] = t;
-    }
-
     protected Pair partition(int[] a, int l, int r, int median) {
-        int it = l;
+        int[] leftest = new int[r - l + 1];
+        int leftIt = 0;
         for (int i = l; i < r; i++) {
             if (a[i] < median) {
-                swap(a, i, it);
-                it++;
+                leftest[leftIt] = a[i];
+                leftIt++;
             }
         }
-        int lastLess = it - 1;
-        for (int i = it; i < r; i++) {
+        int[] middllest = new int[r - l + 1];
+        int middleIt = 0;
+        for (int i = l; i < r; i++) {
             if (a[i] == median) {
-                swap(a, i, it);
+                middllest[middleIt] = a[i];
+                middleIt++;
+            }
+        }
+        int[] rightest = new int[r - l + 1];
+        int rightIt = 0;
+        for (int i = l; i < r; i++) {
+            if (a[i] > median) {
+                rightest[rightIt] = a[i];
+                rightIt++;
+            }
+        }
+        {
+            int it = l;
+            for (int i = 0; i < leftIt; i++) {
+                a[it] = leftest[i];
                 it++;
             }
         }
-        int lastEquals = it - 1;
-        return new Pair(lastLess, lastEquals);
+        {
+            int it = l + leftIt;
+            for (int i = 0; i < middleIt; i++) {
+                a[it] = middllest[i];
+                it++;
+            }
+        }
+        {
+            int it = l + leftIt + middleIt;
+            for (int i = 0; i < rightIt; i++) {
+                a[it] = rightest[i];
+                it++;
+            }
+        }
+        return new Pair(l + leftIt - 1, l + leftIt + middleIt - 1);
     }
 }
