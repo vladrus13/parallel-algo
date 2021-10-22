@@ -116,33 +116,21 @@ public class ParallelQuickSort extends QuickSort {
         RecursiveAction task4 = new RecursiveAction() {
             @Override
             protected void compute() {
-                int it = l;
-                for (int i = 0; i < leftIt[0]; i++) {
-                    a[it] = leftest[i];
-                    it++;
-                }
+                System.arraycopy(leftest, 0, a, l, leftIt[0]);
             }
         };
         task4.fork();
         RecursiveAction task5 = new RecursiveAction() {
             @Override
             protected void compute() {
-                int it = l + leftIt[0];
-                for (int i = 0; i < middleIt[0]; i++) {
-                    a[it] = middllest[i];
-                    it++;
-                }
+                System.arraycopy(middllest, 0, a, l + leftIt[0], middleIt[0]);
             }
         };
         task5.fork();
         RecursiveAction task6 = new RecursiveAction() {
             @Override
             protected void compute() {
-                int it = l + leftIt[0] + middleIt[0];
-                for (int i = 0; i < rightIt[0]; i++) {
-                    a[it] = rightest[i];
-                    it++;
-                }
+                System.arraycopy(rightest, 0, a, l + leftIt[0] + middleIt[0], rightIt[0]);
             }
         };
         task6.fork();
